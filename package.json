@@ -1,67 +1,83 @@
 {
-  "name": "mongoose-history",
-  "version": "0.8.0",
-  "description": "Keeps a history of all changes of a document.",
-  "main": "lib/mongoose-history.js",
+  "name": "@frankast/sms-sender",
+  "main": "lib/index.js",
+  "version": "0.0.0-semantically-released",
+  "description": "This is a wrapper for AWS.SNS & SMSC API in Node.js",
   "files": [
-    "lib/"
+    "lib"
   ],
-  "scripts": {
-    "test": "mocha"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nassor/mongoose-history"
+    "url": "https://github.com/FrankAst/sms-sender.git"
   },
   "keywords": [
-    "mongoose",
-    "history",
-    "safe",
-    "cqrs",
-    "backup"
+    "sms",
+    "sms-sender",
+    "smsc",
+    "aws-sms",
+    "aws-sns",
+    "aws",
+    "smsc-sender"
   ],
-  "author": {
-    "name": "Nassor Paulino da Silva",
-    "email": "nassor@gmail.com",
-    "url": "https://github.com/nassor"
-  },
-  "contributors": [
-    {
-      "name": "Christopher Britz",
-      "email": "britztopher@gmail.com",
-      "url": "https://github.com/britztopher"
-    },
-    {
-      "name": "Allan Nienhuis",
-      "url": "https://github.com/allannienhuis"
-    },
-    {
-      "name": "João Manoel Pampanini Filho",
-      "email": "joao.bontorin@gmail.com",
-      "url": "https://github.com/jmpf13"
-    },
-    {
-      "name": "Sebastien Vaucouleur",
-      "url": "http://vaucouleur.com"
-    },
-    {
-      "name": "Victor Parmar",
-      "url": "https://smalldata.tech"
-    }
-  ],
-  "license": "BSD-2-Clause",
   "bugs": {
-    "url": "https://github.com/nassor/mongoose-history/issues"
+    "url": "https://github.com/FrankAst/sms-sender/issues"
   },
-  "dependencies": {},
+  "homepage": "https://github.com/FrankAst/sms-sender",
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "deep-diff": "^1.0.2",
+    "isomorphic-fetch": "^2.2.1",
+    "mongoose": "^5.0.4"
+  },
   "devDependencies": {
-    "async": "^2.6.0",
-    "mongoose": "^5.0.0",
-    "mocha": "2.4.5",
-    "should": "8.2.2"
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.1",
+    "babel-jest": "22.4.4",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-flow-strip-types": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.13.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "cz-conventional-changelog": "^2.1.0",
+    "eslint": "^5.0.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-flowtype": "^2.42.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "fetch-mock": "^6.0.0",
+    "flow-bin": "^0.70.0",
+    "jest": "22.4.3",
+    "mongodb-memory-server": "^1.6.5",
+    "nodemon": "^1.15.1",
+    "prettier": "^1.10.2",
+    "rimraf": "^2.6.2",
+    "semantic-release": "^15.0.3"
   },
-  "peerDependencies": {
-    "async": "^2.0.0",
-    "mongoose": "^4.0.0 || >=5.0.0"
+  "publishConfig": {
+    "access": "public"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "jest": {
+    "testURL": "http://localhost",
+    "roots": [
+      "<rootDir>/src"
+    ]
+  },
+  "scripts": {
+    "build": "npm run build-cjs && npm run build-flow",
+    "build-cjs": "rimraf lib && babel src --ignore __tests__,__mocks__,__fixtures__ -d lib",
+    "build-flow": "find ./src -name '*.js' -not -path '*/__*' | while read filepath; do cp $filepath `echo $filepath | sed 's/\\/src\\//\\/lib\\//g'`.flow; done",
+    "watch": "jest --watch",
+    "coverage": "jest --coverage --maxWorkers 2",
+    "lint": "eslint --ext .js ./src",
+    "flow": "./node_modules/.bin/flow",
+    "test": "npm run coverage && npm run lint && npm run flow",
+    "semantic-release": "semantic-release"
   }
 }
