@@ -1,7 +1,11 @@
 // @flow
+/* eslint-disable no-param-reassign, func-names */
 
 import mongoose from 'mongoose';
+import DiffPlugin from '../index';
 import DB from './db';
+
+DB.init('mongodb://localhost:27017/testdb');
 
 export const PostSchema = new mongoose.Schema(
   {
@@ -13,15 +17,15 @@ export const PostSchema = new mongoose.Schema(
   {
     versionKey: false,
     timestamps: true,
-    collection: 'Post',
+    collection: 'post',
   }
 );
-
 
 export class PostDoc /* :: extends Mongoose$Document */ {
   title: string;
 }
 
 PostSchema.loadClass(PostDoc);
+PostSchema.plugin(DiffPlugin);
 
 export const Post = DB.data.model('Post', PostSchema);
