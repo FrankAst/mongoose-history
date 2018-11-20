@@ -1,6 +1,7 @@
 // @flow
 
 import mongoose, { Schema, type ObjectId } from 'mongoose';
+import DB from './examples/db';
 
 export default function(collectionName: string, options: Object): any {
   const ChangeSchema = new Schema(
@@ -14,7 +15,7 @@ export default function(collectionName: string, options: Object): any {
       rhs: Schema.Types.Mixed,
     },
     {
-      id: false,
+      _id: false,
       versionKey: false,
     }
   );
@@ -37,10 +38,11 @@ export default function(collectionName: string, options: Object): any {
   );
 
   class DiffDoc /* :: extends Mongoose$Document */ {
+    _id: ObjectId;
     docId: ObjectId;
     changes: Array<ChangeDoc>;
 
-    static async create(docId: ObjectId, changes: any): Promise<DiffDoc> {
+    static async createDiff(docId: ObjectId, changes: any): Promise<DiffDoc> {
       const doc = new this({ docId, changes });
       return doc.save();
     }
@@ -52,6 +54,6 @@ export default function(collectionName: string, options: Object): any {
     options.indexes.forEach(idx => DiffSchema.index(idx));
   }
 
-  const Diff = mongoose.model(collectionName, DiffSchema);
+  const Diff = DB.data.model(collectionName, DiffSchema);
   return Diff;
 }
