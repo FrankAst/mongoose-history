@@ -17,7 +17,7 @@
     "aws-sms",
     "aws-sns",
     "aws",
-    "smsc-sender"
+    "smsc-senderd"
   ],
   "bugs": {
     "url": "https://github.com/FrankAst/sms-sender/issues"
