@@ -1,5 +1,5 @@
 {
-  "name": "@frankast/sms-sender",
+  "name": "mongoose-dp",
   "main": "lib/index.js",
   "version": "0.0.0-semantically-released",
   "description": "This is a wrapper for AWS.SNS & SMSC API in Node.js",
